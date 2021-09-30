@@ -7,6 +7,7 @@ const reader = new FileReader();
 
 function App() {
   const [file, setFile] = useState(null);
+  const [output, setOutput] = useState(null);
 
   /**
    * Handles file selection for input element.
@@ -30,7 +31,7 @@ function App() {
   const handleLoadFile = (e) => {
     const fileContent = e.target?.result;
     setFile(fileContent);
-    processInput(fileContent);
+    setOutput(processInput(fileContent));
   }
 
   useEffect(() => {
@@ -53,9 +54,11 @@ function App() {
           <label className="form-check-label check-label-right" htmlFor="flexSwitchCheckDefault">Image</label>
         </div>
         <div className="output-display">
-          <p>
-            {`${file || ""}`}
-          </p>
+          <span><b>INPUT: </b></span>
+          {file ? file.split('\n').map(str => <p>{str.toString()}</p>) : ""}
+          <br />
+          <span><b>OUTPUT: </b></span>
+          {output ? output.map(str => <p>{str}</p>) : ""}
         </div>
       </div>
     </div>
