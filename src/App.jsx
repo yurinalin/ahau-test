@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { processInput } from './scripts';
+
 import './App.css';
 
 const reader = new FileReader();
@@ -26,7 +28,9 @@ function App() {
    * @param {*} e onLoad event object
    */
   const handleLoadFile = (e) => {
-    setFile(e.target?.result);
+    const fileContent = e.target?.result;
+    setFile(fileContent);
+    processInput(fileContent);
   }
 
   useEffect(() => {
