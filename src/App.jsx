@@ -17,8 +17,8 @@ function App() {
       <div className="app-output pt-3">
         <div className="form-switch switch-box">
           <input className="form-check-input custom-check-input" type="checkbox" disabled id="flexSwitchCheckDefault" />
-          <label className="form-check-label check-label-left" for="flexSwitchCheckDefault">Text</label>
-          <label className="form-check-label check-label-right" for="flexSwitchCheckDefault">Image</label>
+          <label className="form-check-label check-label-left" htmlFor="flexSwitchCheckDefault">Text</label>
+          <label className="form-check-label check-label-right" htmlFor="flexSwitchCheckDefault">Image</label>
         </div>
         <div className="output-display">
           {`Current file selected: ${file}`}

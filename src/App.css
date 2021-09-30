@@ -33,7 +33,7 @@
   width: 100vw;
   padding-right: 10px;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .custom-check-input {
