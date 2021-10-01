@@ -5,6 +5,13 @@ import './App.css';
 
 const reader = new FileReader();
 
+function buildOutput(snapshot = [], index = 0) {
+  return (
+    <li key={index} className="snapshot">
+      {snapshot?.length ? snapshot.map(str => <p key={Math.random()}>{str}</p>) : <></>}
+    </li>);
+}
+
 function App() {
   const [file, setFile] = useState(null);
   const [output, setOutput] = useState(null);
@@ -60,10 +67,10 @@ function App() {
         </div>
         <div className="output-display">
           {file ? <span className="label-span">INPUT: </span> : <></>}
-          {file ? file.split('\n').map((str, index) => <p key={str.replace(/\W/, '') + index}>{str.toString()}</p>) : ""}
+          {file ? <ol>{file.split('\n').map((str, index) => <li key={str.replace(/\W/, '') + index}>{str.toString()}</li>)}</ol> : ""}
           <br />
           {output ? <span className="label-span">OUTPUT: </span> : <></>}
-          {output ? output.map((str, index) => <p key={str.replace(/\W/, '') + index}>{str}</p>) : ""}
+          {output ? <ol className="snapshot-list">{output.map((str, index) => buildOutput(str, index))}</ol> : ""}
         </div>
       </div>
     </div>

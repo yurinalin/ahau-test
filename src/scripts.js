@@ -1,42 +1,47 @@
+/**
+ * Processes the input file and generate a canvas snapshot for each command.
+ * @param {string} fileContent String content of input file
+ * @returns Array of canvas snapshots
+ */
 export function processInput(fileContent) {
     if (!fileContent) return;
 
     const textLines = fileContent.split('\n');
-    console.log(textLines);
+    // console.log(textLines);
+    // This array will keep snapshots of all changes occurring to the canvas
+    let drawings = [];
 
-    // FIXME: Deal with this global variable
-    let canvasDrawing = [];
-
-    for (const line of textLines) {
+    textLines.forEach((line, index) => {
         let commandParameters = line.trim().split(' ');
         switch (commandParameters[0]) {
             case DRAW_COMMANDS.CANVAS:
                 const canvas = { width: Number.parseInt(commandParameters[1]), height: Number.parseInt(commandParameters[2]) }
                 // console.log(canvas);
-                canvasDrawing = drawCanvas_T(canvas);
+                drawings.push(drawCanvas_T(canvas));
                 break;
             case DRAW_COMMANDS.LINE:
                 const line = { point1: { x: Number.parseInt(commandParameters[1]), y: Number.parseInt(commandParameters[2]) }, point2: { x: Number.parseInt(commandParameters[3]), y: Number.parseInt(commandParameters[4]) } }
                 // console.log(line);
-                canvasDrawing = drawLine_T(line, canvasDrawing);
+                // Destructuring used to pass the previous canvas array by value, not reference (to prevent overwriting snapshots)
+                drawings.push(drawLine_T(line, [...drawings[index - 1]]));
                 break;
             case DRAW_COMMANDS.RECTANGLE:
                 const rect = { point1: { x: Number.parseInt(commandParameters[1]), y: Number.parseInt(commandParameters[2]) }, point2: { x: Number.parseInt(commandParameters[3]), y: Number.parseInt(commandParameters[4]) } }
                 // console.log(rect);
-                canvasDrawing = drawRectangle_T(rect, canvasDrawing);
+                drawings.push(drawRectangle_T(rect, [...drawings[index - 1]]));
                 break;
             case DRAW_COMMANDS.BUCKET_FILL:
                 const fill = { x: Number.parseInt(commandParameters[1]), y: Number.parseInt(commandParameters[2]), color: commandParameters[3] }
                 // console.log(fill);
-                canvasDrawing = fillArea_T([{ x: fill.x, y: fill.y }], fill.color?.charAt(0), canvasDrawing);
+                drawings.push(fillArea_T([{ x: fill.x, y: fill.y }], fill.color?.charAt(0), [...drawings[index - 1]]));
                 break;
             default:
                 break;
         }
-    }
+    });
 
-    console.log(canvasDrawing);
-    return canvasDrawing;
+    // console.log(drawings);
+    return drawings;
 }
 
 /**

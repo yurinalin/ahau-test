@@ -52,6 +52,8 @@
 .output-display {
   width: calc(100vw - 20px);
   height: calc(100% - 2.3rem);
+  padding: 10px;
+  text-align: left;
   color: black;
   background-color: white;
   border-radius: 0.25rem;
@@ -62,6 +64,22 @@
 .label-span {
   font-weight: 700;
   padding-bottom: 0.5rem !important;
+}
+
+li {
+  width: fit-content;
+}
+
+.snapshot-list {
+  width: calc(100% - 32px);
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.snapshot {
+  font-size: small;
+  margin: 5px 20px;
 }
 
 p {
