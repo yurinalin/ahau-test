@@ -1,6 +1,34 @@
-# Getting Started with Create React App
+# Ahau Test Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was created as a technical test for [Ahau Software](https://www.ahausoftware.com/).
+
+## The Problem - Drawing tool 
+
+You're given the task of writing a simple drawing tool. In a nutshell, the program reads the 
+input.txt, executes a set of commands from the file, step by step, and produces output.txt.
+At this time, the functionality of the program is quite limited but this might change in the 
+future. At the moment, the program should support the following set of commands: 
+
+* **C w h**
+* **L x1 y1 x2 y2** 
+* **R x1 y1 x2 y2** 
+* **B x y c** 
+
+**Create Canvas:** Should create a new canvas of width w and height h. 
+
+**Create Line:** Should create a new line from (x1,y1) to (x2,y2). Currently only horizontal or 
+vertical lines are supported. Horizontal and vertical lines will be drawn using the 'x' 
+character. 
+
+**Create Rectangle:** Should create a new rectangle, whose upper left corner is (x1,y1) and 
+lower right corner is (x2,y2). Horizontal and vertical lines will be drawn using the 'x' 
+character. 
+
+**Bucket Fill:** Should fill the entire area connected to (x,y) with "colour" c. The behavior of this 
+is the same as that of the "bucket fill" tool in paint programs. 
+Please take into account that you can only draw if a canvas has been created.
+
+<hr />
 
 ## Available Scripts
 
@@ -14,11 +42,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
 ### `npm run build`
 
 Builds the app for production to the `build` folder.\
@@ -28,43 +51,3 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
