@@ -15,7 +15,6 @@ function App() {
    */
   const handleFileSelection = (e) => {
     const file = e.target?.files?.[0];
-    // console.log(file);
 
     try {
       reader.readAsText(file);
@@ -31,7 +30,6 @@ function App() {
   const handleLoadFile = (e) => {
     const fileContent = e.target?.result;
     setFile(fileContent);
-    setOutput(processInput(fileContent));
   }
 
   useEffect(() => {
@@ -42,23 +40,30 @@ function App() {
     return () => { reader.removeEventListener('load', handleLoadFile) }
   });
 
+  useEffect(() => {
+    // TODO: Process one command at a time
+    // Process input after state refresh
+    setOutput(processInput(file));
+  }, [file]);
+
   return (
     <div className="App">
       <div className="app-input pt-3">
         <input className="form-control custom-file-input" type="file" name="fileInput" id="fileInput" accept=".txt" onChange={handleFileSelection} />
       </div>
       <div className="app-output pt-3">
+        {/* Switch from text to image output (future feature) */}
         <div className="form-switch switch-box">
           <input className="form-check-input custom-check-input" type="checkbox" disabled id="flexSwitchCheckDefault" />
           <label className="form-check-label check-label-left" htmlFor="flexSwitchCheckDefault">Text</label>
           <label className="form-check-label check-label-right" htmlFor="flexSwitchCheckDefault">Image</label>
         </div>
         <div className="output-display">
-          <span><b>INPUT: </b></span>
-          {file ? file.split('\n').map(str => <p>{str.toString()}</p>) : ""}
+          {file ? <span className="label-span">INPUT: </span> : <></>}
+          {file ? file.split('\n').map((str, index) => <p key={str.replace(/\W/, '') + index}>{str.toString()}</p>) : ""}
           <br />
-          <span><b>OUTPUT: </b></span>
-          {output ? output.map(str => <p>{str}</p>) : ""}
+          {output ? <span className="label-span">OUTPUT: </span> : <></>}
+          {output ? output.map((str, index) => <p key={str.replace(/\W/, '') + index}>{str}</p>) : ""}
         </div>
       </div>
     </div>

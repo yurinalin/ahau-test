@@ -59,6 +59,11 @@
   box-shadow: 5px 5px 15px 0px rgba(0, 0, 0, 0.3);
 }
 
+.label-span {
+  font-weight: 700;
+  padding-bottom: 0.5rem !important;
+}
+
 p {
   font-family: "Lucida Console", "Courier New", monospace;
   white-space: pre;
