@@ -8,26 +8,26 @@ export function processInput(fileContent) {
     let canvasDrawing = [];
 
     for (const line of textLines) {
-        let commandArray = line.trim().split(' ');
-        switch (commandArray[0]) {
+        let commandParameters = line.trim().split(' ');
+        switch (commandParameters[0]) {
             case DRAW_COMMANDS.CANVAS:
-                const canvas = { width: Number.parseInt(commandArray[1]), height: Number.parseInt(commandArray[2]) }
-                console.log(canvas);
+                const canvas = { width: Number.parseInt(commandParameters[1]), height: Number.parseInt(commandParameters[2]) }
+                // console.log(canvas);
                 canvasDrawing = drawCanvas_T(canvas);
                 break;
             case DRAW_COMMANDS.LINE:
-                const line = { point1: { x: Number.parseInt(commandArray[1]), y: Number.parseInt(commandArray[2]) }, point2: { x: Number.parseInt(commandArray[3]), y: Number.parseInt(commandArray[4]) } }
-                console.log(line);
+                const line = { point1: { x: Number.parseInt(commandParameters[1]), y: Number.parseInt(commandParameters[2]) }, point2: { x: Number.parseInt(commandParameters[3]), y: Number.parseInt(commandParameters[4]) } }
+                // console.log(line);
                 canvasDrawing = drawLine_T(line, canvasDrawing);
                 break;
             case DRAW_COMMANDS.RECTANGLE:
-                const rect = { point1: { x: Number.parseInt(commandArray[1]), y: Number.parseInt(commandArray[2]) }, point2: { x: Number.parseInt(commandArray[3]), y: Number.parseInt(commandArray[4]) } }
-                console.log(rect);
+                const rect = { point1: { x: Number.parseInt(commandParameters[1]), y: Number.parseInt(commandParameters[2]) }, point2: { x: Number.parseInt(commandParameters[3]), y: Number.parseInt(commandParameters[4]) } }
+                // console.log(rect);
                 canvasDrawing = drawRectangle_T(rect, canvasDrawing);
                 break;
             case DRAW_COMMANDS.BUCKET_FILL:
-                const fill = { x: Number.parseInt(commandArray[1]), y: Number.parseInt(commandArray[2]), color: commandArray[3] }
-                console.log(fill);
+                const fill = { x: Number.parseInt(commandParameters[1]), y: Number.parseInt(commandParameters[2]), color: commandParameters[3] }
+                // console.log(fill);
                 canvasDrawing = fillArea_T([{ x: fill.x, y: fill.y }], fill.color?.charAt(0), canvasDrawing);
                 break;
             default:
@@ -39,6 +39,9 @@ export function processInput(fileContent) {
     return canvasDrawing;
 }
 
+/**
+ * Possible input command characters.
+ */
 const DRAW_COMMANDS = {
     CANVAS: 'C',
     LINE: 'L',
@@ -46,6 +49,9 @@ const DRAW_COMMANDS = {
     BUCKET_FILL: 'B'
 }
 
+/**
+ * Characters to be drawn on text output.
+ */
 const DRAWING_CHARACTERS = {
     FLOOR_CEILING: '-',
     WALL: '|',
@@ -53,6 +59,11 @@ const DRAWING_CHARACTERS = {
     EMPTY: ' '
 }
 
+/**
+ * Draws (textually) a canvas of given dimensions.
+ * @param {object} dimensions Object with width and height chosen for the canvas
+ * @returns An array of strings representing the canvas
+ */
 function drawCanvas_T(dimensions = { width: 0, height: 0 }) {
     let drawing = [];
     const width = Math.abs(dimensions.width), height = Math.abs(dimensions.height);
@@ -74,6 +85,12 @@ function drawCanvas_T(dimensions = { width: 0, height: 0 }) {
     return drawing;
 }
 
+/**
+ * Draws (textually) a line from point1 to point2 in the given canvas.
+ * @param {object} line Object containg the start and end points for the line
+ * @param {array} canvas Drawing canvas
+ * @returns New drawing canvas with the line drawn
+ */
 function drawLine_T(line = { point1: { x: 0, y: 0 }, point2: { x: 0, y: 0 } }, canvas = []) {
     // Not checking if numbers are smaller than 0 or if point1 is bigger than point2 (could be added in the future)
     if (!(line.point1.x && line.point1.y) || !(line.point2.x && line.point2.y) || ((line.point1.x !== line.point2.x) && (line.point1.y !== line.point2.y)) || !canvas.length) return canvas;
@@ -89,6 +106,12 @@ function drawLine_T(line = { point1: { x: 0, y: 0 }, point2: { x: 0, y: 0 } }, c
     return newDrawing;
 }
 
+/**
+ * Draws (textually) a rectangle with point1 and point2 as opposite vertices in the given canvas.
+ * @param {object} rect Object cointaining the top-left and the bottom-right corners of the rectangle to be drawn
+ * @param {array} canvas Drawing canvas
+ * @returns New drawing canvas with rectangle drawn
+ */
 function drawRectangle_T(rect = { point1: { x: 0, y: 0 }, point2: { x: 0, y: 0 } }, canvas = []) {
     // Not checking if numbers are smaller than 0 or if point1 is bigger than point2 (could be added in the future)
     if (!(rect.point1.x && rect.point1.y) || !(rect.point2.x && rect.point2.y) || (rect.point1.x === rect.point2.x) || (rect.point1.y === rect.point2.y) || !canvas.length) return canvas;
@@ -104,6 +127,14 @@ function drawRectangle_T(rect = { point1: { x: 0, y: 0 }, point2: { x: 0, y: 0 }
     return newDrawing;
 }
 
+/**
+ * Fills (textually) a given "empty" area around the chosen point in the given canvas.
+ * This function is recursive, so non-conforming canvases may cause unexpected behaviors such as exceptions.
+ * @param {array} pointsToPaint Array of points that must paint themselves
+ * @param {string} color Single character representing the fill color
+ * @param {array} canvas Drawing canvas
+ * @returns New drawing canvas with fill color added
+ */
 function fillArea_T(pointsToPaint = [{ x: 0, y: 0 }], color = 'c', canvas = []) {
     const currentPoint = pointsToPaint[0];
     // Removes currentPoint from the list that will be passed on
@@ -129,6 +160,13 @@ function fillArea_T(pointsToPaint = [{ x: 0, y: 0 }], color = 'c', canvas = []) 
     return fillArea_T(newPointsToPaint, color, newDrawing);
 }
 
+/**
+ * Replaces the character at index with replacement.
+ * @param {string} str Any string
+ * @param {number} index Index of character to be replaced
+ * @param {string} replacement Character replacement
+ * @returns New string with the characters replaced
+ */
 function replaceAt(str, index, replacement) {
     return str.substr(0, index) + replacement + str.substr(index + replacement.length);
 }
